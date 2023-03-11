@@ -10,3 +10,4 @@
 
 - Run `npm install` to install all dependencies
 - Run `npm run dev` to start the app
+- The app will be running on `localhost:3000`
