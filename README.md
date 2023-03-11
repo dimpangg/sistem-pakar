@@ -4,6 +4,7 @@
 
 - Node 18.12.1
 - NPM 8.19.2
+- Formatter: Prettier
 
 ## Starting the App
 
