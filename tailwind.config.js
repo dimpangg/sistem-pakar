@@ -63,6 +63,13 @@ module.exports = {
             fontWeight: "500",
           },
         ],
+        subtle: [
+          "14px",
+          {
+            lineHeight: "20px",
+            fontWeight: "400",
+          },
+        ],
         detail: [
           "12px",
           {

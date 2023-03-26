@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="absolute bottom-0 flex min-h-[120px] w-96 flex-col items-center justify-center gap-3 bg-slate-900 text-white">
+    <footer className="flex min-h-[120px] flex-col items-center justify-center gap-3 bg-slate-900 text-white">
       <Image
         src="/mushroom-gills.svg"
         width={24}
