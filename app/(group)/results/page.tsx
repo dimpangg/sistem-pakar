@@ -3,15 +3,30 @@
 import { decryptValue } from "@/helpers";
 import { IDiagnostics, LocalStorageKey } from "@/types";
 import { getLocalStorage } from "@/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ClipboardCheck, ChevronLeft } from "lucide-react";
 import { Button } from "@/components";
 import Link from "next/link";
+import Loading from "./loading";
 
 const ResultsPage = () => {
-  const data: IDiagnostics = JSON.parse(
-    decryptValue(getLocalStorage(LocalStorageKey.Diagnosis))
-  );
+  const [data, setData] = useState<IDiagnostics>({
+    pest_disease: {
+      label: "",
+      description: "",
+      treatment: [],
+    },
+    percentage: 0,
+  });
+
+  useEffect(() => {
+    const data: IDiagnostics = JSON.parse(
+      decryptValue(getLocalStorage(LocalStorageKey.Diagnosis))
+    );
+    setData(data);
+  }, []);
+
+  if (!data.pest_disease.label) return <Loading />;
 
   return (
     <div className="mt-5 mb-16 px-4">
@@ -39,7 +54,7 @@ const ResultsPage = () => {
           <div className="mb-[6px] text-p-ui font-bold text-slate-900">
             Cara Penanganan
           </div>
-          <ul>
+          <ul className="list-inside list-disc">
             {data.pest_disease.treatment.map((treatment, i) => (
               <li className="text-detail text-slate-900" key={i}>
                 {treatment}
