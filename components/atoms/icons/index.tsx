@@ -1,3 +1,4 @@
-import ChevronRight from "./ChevronRight";
+import Doctor from "./Doctor";
+import MushroomGills from "./MushroomGills";
 
-export { ChevronRight };
+export { MushroomGills, Doctor };

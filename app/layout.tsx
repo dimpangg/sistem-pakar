@@ -9,6 +9,7 @@ export const metadata = {
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
 export default function RootLayout({
