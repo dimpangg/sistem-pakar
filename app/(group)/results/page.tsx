@@ -20,6 +20,9 @@ const ResultsPage = () => {
   });
 
   useEffect(() => {
+    if (!getLocalStorage(LocalStorageKey.Diagnosis)) {
+      window.location.href = "/";
+    }
     const data: IDiagnostics = JSON.parse(
       decryptValue(getLocalStorage(LocalStorageKey.Diagnosis))
     );

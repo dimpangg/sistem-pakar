@@ -13,6 +13,7 @@ const Error = () => {
     >
       <div className="text-h3 text-slate-900">OOPS!</div>
       <Image
+        priority
         src="/undraw_warning.svg"
         alt="error"
         width={200}

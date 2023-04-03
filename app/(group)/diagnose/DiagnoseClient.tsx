@@ -69,6 +69,7 @@ const DiagnoseClient = ({ data }: { data: ISymptoms[] }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({ symptoms: selected }),
       });
