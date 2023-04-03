@@ -30,8 +30,8 @@ const DiagnoseClient = ({ data }: { data: ISymptoms[] }) => {
     return (
       <div
         className={classNames(
-          "flex cursor-pointer items-center justify-between gap-1 rounded-md border-[1px] border-solid border-slate-200 px-4 py-2",
-          selected.includes(item.code) ? "bg-slate-50" : "bg-white"
+          "flex cursor-pointer items-center justify-between gap-1 rounded-md border-[1px] border-solid border-slate-200 px-4 py-4",
+          selected.includes(item.code) ? "bg-slate-100" : "bg-white"
         )}
         onClick={() => {
           if (selected.includes(item.code)) {
