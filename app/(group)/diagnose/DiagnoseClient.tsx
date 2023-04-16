@@ -8,7 +8,7 @@ import {
   LocalStorageKey,
 } from "@/types";
 import React, { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, Trash2, X } from "lucide-react";
 import classNames from "classnames";
 import { setLocalStorage } from "@/utils";
 import { API_URL, ENDPOINTS } from "@/constant";
@@ -23,15 +23,17 @@ const DiagnoseClient = ({ data }: { data: ISymptoms[] }) => {
   const [loading, setLoading] = useState(false);
 
   const Title = ({ children }: { children: string }) => (
-    <div className="mb-1 text-large text-slate-900">{children}</div>
+    <div className="mb-2 text-large text-slate-900">{children}</div>
   );
 
   const Checkbox = ({ item }: { item: ISymptoms }) => {
     return (
       <div
         className={classNames(
-          "flex cursor-pointer items-center justify-between gap-1 rounded-md border-[1px] border-solid border-slate-200 px-4 py-4",
-          selected.includes(item.code) ? "bg-slate-100" : "bg-white"
+          "flex cursor-pointer select-none items-center justify-between gap-1 rounded-md border-[1px] border-solid px-4 py-4",
+          selected.includes(item.code)
+            ? "border-emerald-200 bg-emerald-50"
+            : "border-slate-200 bg-white"
         )}
         onClick={() => {
           if (selected.includes(item.code)) {
@@ -44,9 +46,9 @@ const DiagnoseClient = ({ data }: { data: ISymptoms[] }) => {
         <div className="text-body-medium text-slate-900">{item.label}</div>
         <div>
           {selected.includes(item.code) ? (
-            <X className="text-slate-900" height={16} width={16} />
+            <X className="text-slate-500" height={16} width={16} />
           ) : (
-            <Plus className="text-slate-900" height={16} width={16} />
+            <Plus className="text-emerald-400" height={16} width={16} />
           )}
         </div>
       </div>
@@ -86,16 +88,15 @@ const DiagnoseClient = ({ data }: { data: ISymptoms[] }) => {
 
       router.replace("/results");
     } catch (err) {
-      throw new Error(JSON.stringify(err));
-    } finally {
       setLoading(false);
+      throw new Error(JSON.stringify(err));
     }
   }
 
   return (
     <div className="mb-16 px-4">
       <section className="mt-5 mb-7 flex gap-2">
-        <Doctor />
+        <Doctor className="text-emerald-400" />
         <div>
           <div className="text-h4 text-slate-900">Pilih Gejala</div>
           <div className="text-detail text-slate-500">
@@ -146,28 +147,35 @@ const DiagnoseClient = ({ data }: { data: ISymptoms[] }) => {
       </section>
       {selected.length > 0 && (
         <div
-          className="fixed bottom-0 left-0 right-0 flex items-center justify-center rounded-t-[10px] bg-white"
+          className="fixed bottom-0 left-0 right-0 flex items-center justify-center rounded-t-[10px] bg-white shadow-[0px_3px_20px_rgba(0,0,0,0.1)]"
           style={{
             boxShadow: "0px 3px 20px rgba(0, 0, 0, 0.1)",
           }}
         >
           <div className="min-w-[384px] px-4 py-4">
-            <div className={classNames("mb-2 text-body", shake ? "shake" : "")}>
-              <span
-                className={classNames(
-                  selected.length === 1 || selected.length > 5
-                    ? "text-red-500"
-                    : "text-slate-900"
-                )}
+            <div className="flex items-center justify-between">
+              <div
+                className={classNames("mb-3 text-body", shake ? "shake" : "")}
               >
-                {selected.length} gejala dipilih
-              </span>
-              {selected.length === 1 && (
-                <span className="text-slate-400"> (min 2 gejala)</span>
-              )}
-              {selected.length > 5 && (
-                <span className="text-slate-400"> (max 5 gejala)</span>
-              )}
+                <span
+                  className={classNames(
+                    selected.length === 1 || selected.length > 5
+                      ? "text-red-500"
+                      : "text-slate-900"
+                  )}
+                >
+                  {selected.length} gejala dipilih
+                </span>
+                {selected.length === 1 && (
+                  <span className="text-slate-400"> (min 2 gejala)</span>
+                )}
+                {selected.length > 5 && (
+                  <span className="text-slate-400"> (max 5 gejala)</span>
+                )}
+              </div>
+              <button className="p-1" onClick={() => setSelected([])}>
+                <Trash2 className="h-4 w-4 text-slate-400" />
+              </button>
             </div>
             <Button
               isLoading={loading}

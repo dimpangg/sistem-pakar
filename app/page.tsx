@@ -10,7 +10,8 @@ export default function Home() {
         <div className="mt-2 flex flex-col gap-10 rounded-2xl bg-slate-50 px-4 py-8">
           <div>
             <div className="text-h2">
-              Sistem Deteksi Hama dan Penyakit pada Jamur Tiram
+              Sistem Deteksi Hama dan Penyakit pada{" "}
+              <span className="text-emerald-400">Jamur Tiram</span>
             </div>
             <p className="mt-1 text-subtle text-slate-700">
               Sistem pakar untuk mendiagnosa dan mengendalikan masalah hama dan

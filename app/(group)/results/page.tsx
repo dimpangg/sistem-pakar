@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { ClipboardCheck, ChevronLeft } from "lucide-react";
 import { Button } from "@/components";
 import Link from "next/link";
-import Loading from "./loading";
+import Loading from "../../loading";
 
 const ResultsPage = () => {
   const [data, setData] = useState<IDiagnostics>({
@@ -35,7 +35,7 @@ const ResultsPage = () => {
     <div className="mt-5 mb-16 px-4">
       <section className="mb-6 flex gap-2">
         <div>
-          <ClipboardCheck size={36} className="text-slate-900" />
+          <ClipboardCheck size={36} className="text-emerald-400" />
         </div>
         <div>
           <div className="text-h4 text-slate-900">Hasil Diagnosis</div>

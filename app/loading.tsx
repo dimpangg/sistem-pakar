@@ -11,7 +11,7 @@ const Loading = () => {
     >
       <div>
         <Loader2
-          className="animate-spin text-slate-900"
+          className="animate-spin text-emerald-400"
           height={64}
           width={64}
         />
