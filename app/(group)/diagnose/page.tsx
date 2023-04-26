@@ -8,13 +8,12 @@ import {
   LocalStorageKey,
 } from "@/types";
 import React, { useEffect, useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Loader2, Plus, X } from "lucide-react";
 import classNames from "classnames";
 import { setLocalStorage } from "@/utils";
 import { ENDPOINTS } from "@/constant";
 import { API_URL, encryptValue } from "@/helpers";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/loading";
 
 const Diagnose = () => {
   const router = useRouter();
@@ -128,7 +127,22 @@ const Diagnose = () => {
   }, []);
 
   if (loadingGet) {
-    return <Loading />;
+    return (
+      <div
+        style={{
+          height: "calc(100vh - 64.8px - 120px )",
+        }}
+        className="flex items-center justify-center"
+      >
+        <div>
+          <Loader2
+            className="animate-spin text-primary"
+            height={64}
+            width={64}
+          />
+        </div>
+      </div>
+    );
   }
 
   return (
