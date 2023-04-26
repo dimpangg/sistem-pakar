@@ -15,12 +15,17 @@ const inter = Inter({
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html className={`${inter.variable}`} lang="en">
-      <body className="mx-auto min-h-screen max-w-sm">{children}</body>
+      <body className="min-h-screen">
+        {children}
+        {modal}
+      </body>
     </html>
   );
 }

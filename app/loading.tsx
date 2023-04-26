@@ -10,11 +10,7 @@ const Loading = () => {
       className="flex items-center justify-center"
     >
       <div>
-        <Loader2
-          className="animate-spin text-emerald-400"
-          height={64}
-          width={64}
-        />
+        <Loader2 className="animate-spin text-primary" height={64} width={64} />
       </div>
     </div>
   );

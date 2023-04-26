@@ -5,16 +5,13 @@ import { MushroomGills } from "../atoms";
 
 const Header = ({ className }: { className?: string }) => {
   return (
-    <header
-      className={classNames(
-        "px-4 py-[18px] text-h4 text-emerald-500",
-        className
-      )}
-    >
-      <Link href="/" className="flex items-center gap-2">
-        <MushroomGills />
-        Sistem Pakar
-      </Link>
+    <header className={classNames("text-h4 text-primary", className)}>
+      <div className="mx-auto max-w-sm px-4 py-[18px]">
+        <Link href="/" className="flex items-center gap-2">
+          <MushroomGills />
+          Sistem Pakar
+        </Link>
+      </div>
     </header>
   );
 };

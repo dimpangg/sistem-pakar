@@ -1,17 +1,16 @@
-import { Button, Footer, Header } from "@/components";
+import { Button } from "@/components";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <Header />
       <div className="px-4">
         <div className="mt-2 flex flex-col gap-10 rounded-2xl bg-slate-50 px-4 py-8">
           <div>
             <div className="text-h2">
               Sistem Deteksi Hama dan Penyakit pada{" "}
-              <span className="text-emerald-400">Jamur Tiram</span>
+              <span className="text-primary">Jamur Tiram</span>
             </div>
             <p className="mt-1 text-subtle text-slate-700">
               Sistem pakar untuk mendiagnosa dan mengendalikan masalah hama dan
@@ -19,7 +18,7 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <Link href="/diagnose">
+            <Link href="/login">
               <Button className="flex justify-between gap-3">
                 Mulai Diagnosa <ChevronRight />
               </Button>
@@ -31,7 +30,7 @@ export default function Home() {
         <div className="text-large text-slate-900">Support by</div>
         <div className="text-h2 text-slate-300">Mitra Jamur</div>
       </div>
-      <section className="mt-12 mb-5 px-4">
+      <section className="mb-5 mt-12 px-4">
         <div className="mb-3 text-h2 text-slate-900">Features</div>
         <div className="flex flex-col gap-4">
           {[1, 2, 3].map((item) => (
@@ -51,7 +50,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <Footer />
     </>
   );
 }

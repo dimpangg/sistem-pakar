@@ -1,49 +1,66 @@
-import classNames from "classnames";
-import React, { forwardRef } from "react";
-import { LoadingSpinner } from "../atoms";
+import * as React from "react";
+import { VariantProps, cva } from "class-variance-authority";
 
-type ButtonProps = {
-  buttonType?: "default" | "with-icon-right" | "with-icon-left";
-  icon?: React.ReactNode;
+import cn from "classnames";
+import { Loader2 } from "lucide-react";
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "underline-offset-4 hover:underline text-primary",
+      },
+      size: {
+        default: "py-3 px-5 rounded-[10px]",
+        sm: "h-9 px-3 rounded-[10px]",
+        lg: "h-11 px-8 rounded-[10px]",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
-} & React.ComponentProps<"button">;
+}
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      children,
-      className,
-      isLoading,
-      buttonType = "default",
-      icon,
-      ...rest
-    }: ButtonProps,
-    ref
-  ) => {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, isLoading, children, ...props }, ref) => {
     return (
       <button
-        disabled={isLoading || rest.disabled}
-        className={classNames(
-          "rounded-[10px] bg-emerald-400 px-4 py-2 text-body-medium text-white hover:bg-emerald-400/80 disabled:bg-emerald-400/50",
-          isLoading && "flex items-center justify-center gap-2",
-          buttonType === "with-icon-right" &&
-            "flex items-center justify-between",
-          buttonType === "with-icon-left" &&
-            "flex items-center justify-between",
-          className
-        )}
-        {...rest}
+        className={cn(buttonVariants({ variant, size, className }), {
+          "gap-2": isLoading,
+        })}
         ref={ref}
+        disabled={isLoading || props.disabled}
+        {...props}
       >
-        {isLoading && <LoadingSpinner />}
-        {buttonType === "with-icon-left" && icon}
-        {children}
-        {buttonType === "with-icon-right" && icon}
+        {isLoading ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            {children}
+          </>
+        ) : (
+          children
+        )}
       </button>
     );
   }
 );
-
 Button.displayName = "Button";
 
-export default Button;
+export { Button, buttonVariants };

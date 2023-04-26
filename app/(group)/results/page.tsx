@@ -32,7 +32,7 @@ const ResultsPage = () => {
   if (!data.pest_disease.label) return <Loading />;
 
   return (
-    <div className="mt-5 mb-16 px-4">
+    <div className="mb-16 mt-5 px-4">
       <section className="mb-6 flex gap-2">
         <div>
           <ClipboardCheck size={36} className="text-emerald-400" />
@@ -45,7 +45,7 @@ const ResultsPage = () => {
         </div>
       </section>
       <section className="mx-4 mb-10 flex flex-col gap-4">
-        <div className="rounded-2xl bg-slate-50 py-6 px-5">
+        <div className="rounded-2xl bg-slate-50 px-5 py-6">
           <div className="mb-[6px] text-p-ui font-bold text-slate-900">
             {data.pest_disease.label}
           </div>
@@ -53,7 +53,7 @@ const ResultsPage = () => {
             {data.pest_disease.description}
           </div>
         </div>
-        <div className="rounded-2xl bg-slate-50 py-6 px-5">
+        <div className="rounded-2xl bg-slate-50 px-5 py-6">
           <div className="mb-[6px] text-p-ui font-bold text-slate-900">
             Cara Penanganan
           </div>

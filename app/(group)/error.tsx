@@ -9,7 +9,7 @@ const Error = () => {
       style={{
         height: "calc(100vh - 64.8px - 120px )",
       }}
-      className="flex flex-col items-center justify-center gap-5"
+      className="mx-auto flex max-w-sm flex-col items-center justify-center gap-5"
     >
       <div className="text-h3 text-slate-900">OOPS!</div>
       <Image

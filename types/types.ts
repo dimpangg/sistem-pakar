@@ -30,4 +30,5 @@ export type IDiagnostics = {
 
 export enum LocalStorageKey {
   Diagnosis = "38f00f8738e241daea6f37f6f55ae8414d7b0219",
+  Token = "38f00f8738e241daea6f37f6fakmh8414d7b0219",
 }
