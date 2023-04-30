@@ -1,12 +1,11 @@
 import { Button } from "@/components";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
-import { Footer, Header } from "@/components";
 import React from "react";
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <div className="px-4">
         <div className="mt-2 flex flex-col gap-10 rounded-2xl bg-slate-50 px-4 py-8">
           <div>
@@ -52,18 +51,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-    </Layout>
-  );
-}
-
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <Header />
-      <main className="mx-auto min-h-[calc(100vh-120px-64px-8px)] max-w-sm">
-        {children}
-      </main>
-      <Footer />
     </>
   );
-};
+}
