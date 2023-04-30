@@ -97,28 +97,33 @@ const Diagnose = () => {
   }
 
   async function getData() {
-    const res = await fetch(API_URL + ENDPOINTS.SYMPTOMS, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-      credentials: "include",
-    });
-    if (res.status === 401) {
+    try {
+      const res = await fetch(API_URL + ENDPOINTS.SYMPTOMS, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (res.status === 401) {
+        setLoadingGet(false);
+        router.replace("/login");
+        throw new Error("Unauthenticated");
+      }
+      if (!res.ok) {
+        setLoadingGet(false);
+        router.replace("/login");
+        throw new Error("An error occurred while fetching the data.");
+      }
+      const data: ICommonResponse<ISymptoms[]> = await res.json();
+      setData(data.data);
       setLoadingGet(false);
-      router.replace("/login");
-      setTimeout(() => {
-        router.refresh();
-      }, 1000);
-      throw new Error("Unauthorized");
-    }
-    if (!res.ok) {
+    } catch (err) {
       setLoadingGet(false);
-      throw new Error("An error occurred while fetching the data.");
+      window.location.pathname = "/login";
+      throw new Error(JSON.stringify(err));
     }
-    const data: ICommonResponse<ISymptoms[]> = await res.json();
-    setData(data.data);
-    setLoadingGet(false);
   }
 
   useEffect(() => {
