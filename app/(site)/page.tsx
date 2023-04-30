@@ -19,7 +19,7 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <Link href="/auth/login">
+            <Link href="/login">
               <Button className="flex justify-between gap-3">
                 Mulai Diagnosa <ChevronRight />
               </Button>
