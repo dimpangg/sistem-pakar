@@ -8,7 +8,7 @@ import {
   DialogTitle,
   Input,
 } from "@/components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { API_URL } from "@/helpers";
 import { ENDPOINTS } from "@/constant";
@@ -57,13 +57,21 @@ const login = async (email: string, password: string) => {
 
 const Login = () => {
   const router = useRouter();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isEmailFound, setIsEmailFound] = useState(false);
 
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    setOpen(true);
+
+    return () => {
+      setOpen(false);
+    };
+  }, []);
 
   return (
     <Dialog
