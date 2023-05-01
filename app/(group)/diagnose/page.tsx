@@ -128,8 +128,30 @@ const Diagnose = () => {
 
   useEffect(() => {
     getData();
+
+    checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function checkToken() {
+    fetch(API_URL + "/token", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "include",
+    }).then((res) => {
+      if (res.status === 401) {
+        router.replace("/login");
+      }
+
+      if (!res.ok) {
+        router.replace("/login");
+      }
+
+      return res.json();
+    });
+  }
 
   if (loadingGet) {
     return (

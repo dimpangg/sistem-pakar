@@ -2,8 +2,17 @@ import { Button } from "@/components";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  const cookieStore = cookies();
+  const jwt = cookieStore.has("jwt");
+
+  if (jwt) {
+    redirect("/diagnose");
+  }
+
   return (
     <>
       <div className="px-4">
@@ -29,7 +38,9 @@ export default function Home() {
       </div>
       <div className="mt-6 flex w-full flex-col items-center">
         <div className="text-large text-slate-900">Support by</div>
-        <div className="text-h2 text-slate-300">Mitra Jamur</div>
+        <div className="px-4 text-center text-h2 text-slate-300">
+          PT Mitra Jamur Indonesia
+        </div>
       </div>
       <section className="mb-5 mt-12 px-4">
         <div className="mb-3 text-h2 text-slate-900">Features</div>
