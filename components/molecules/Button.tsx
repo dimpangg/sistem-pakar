@@ -1,8 +1,8 @@
 import * as React from "react";
 import { VariantProps, cva } from "class-variance-authority";
 
-import cn from "classnames";
 import { Loader2 } from "lucide-react";
+import { cn } from "@/utils";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
@@ -24,6 +24,9 @@ const buttonVariants = cva(
         sm: "h-9 px-3 rounded-[10px]",
         lg: "h-11 px-8 rounded-[10px]",
       },
+      fullWidth: {
+        true: "w-full",
+      },
     },
     defaultVariants: {
       variant: "default",
@@ -39,10 +42,13 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, isLoading, children, ...props }, ref) => {
+  (
+    { className, variant, size, isLoading, fullWidth, children, ...props },
+    ref
+  ) => {
     return (
       <button
-        className={cn(buttonVariants({ variant, size, className }), {
+        className={cn(buttonVariants({ variant, size, className, fullWidth }), {
           "gap-2": isLoading,
         })}
         ref={ref}

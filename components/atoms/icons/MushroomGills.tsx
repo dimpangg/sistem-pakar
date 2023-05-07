@@ -1,5 +1,5 @@
 import { IconProps } from "@/types";
-import classNames from "classnames";
+import classNames from "clsx";
 import React from "react";
 
 const MushroomGills = ({ width, height, className }: IconProps) => {

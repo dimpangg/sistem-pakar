@@ -1,6 +1,6 @@
 import React from "react";
 import { IconProps } from "@/types";
-import classNames from "classnames";
+import classNames from "clsx";
 
 const Doctor = ({ width = 36, height = 36, className }: IconProps) => {
   return (

@@ -2,17 +2,8 @@ import { Button } from "@/components";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export default function Home() {
-  const cookieStore = cookies();
-  const jwt = cookieStore.has("jwt");
-
-  if (jwt) {
-    redirect("/diagnose");
-  }
-
   return (
     <>
       <div className="px-4">

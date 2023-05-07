@@ -7,4 +7,5 @@ export const ENDPOINTS = {
   CHECK_EMAIL: "/check-email",
   LOGIN: "/login",
   REGISTER: "/register",
+  LOGOUT: "/logout",
 };

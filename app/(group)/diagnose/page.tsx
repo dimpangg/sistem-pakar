@@ -9,7 +9,7 @@ import {
 } from "@/types";
 import React, { useEffect, useState } from "react";
 import { Loader2, Plus, X } from "lucide-react";
-import classNames from "classnames";
+import classNames from "clsx";
 import { setLocalStorage } from "@/utils";
 import { ENDPOINTS } from "@/constant";
 import { API_URL, encryptValue } from "@/helpers";
@@ -129,29 +129,8 @@ const Diagnose = () => {
   useEffect(() => {
     getData();
 
-    checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  function checkToken() {
-    fetch(API_URL + "/token", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-      credentials: "include",
-    }).then((res) => {
-      if (res.status === 401) {
-        router.replace("/login");
-      }
-
-      if (!res.ok) {
-        router.replace("/login");
-      }
-
-      return res.json();
-    });
-  }
 
   if (loadingGet) {
     return (
