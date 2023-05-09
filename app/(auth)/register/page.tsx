@@ -2,7 +2,6 @@
 import { buttonVariants, RegisterForm } from "@/components";
 import { cn } from "@/utils";
 import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 
 const Register = ({
@@ -12,7 +11,7 @@ const Register = ({
 }) => {
   return (
     <section className="w-full">
-      <Link
+      <a
         href="/"
         className={cn(
           buttonVariants({
@@ -23,7 +22,7 @@ const Register = ({
         )}
       >
         <ChevronLeft className="mr-2 h-5 w-5" /> Kembali
-      </Link>
+      </a>
       <div className="mb-4 text-h4">Daftar</div>
       <RegisterForm searchParams={searchParams} />
     </section>

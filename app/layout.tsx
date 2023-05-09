@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import clsx from "clsx";
 
 export const metadata = {
   title: "Sistem Pakar Jamur Tiram",
@@ -21,7 +22,7 @@ export default function RootLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <html className={`${inter.variable}`} lang="en">
+    <html className={clsx(inter.variable)} lang="en">
       <body className="min-h-screen">
         {children}
         {modal}
