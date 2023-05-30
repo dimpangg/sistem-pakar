@@ -64,7 +64,9 @@ const LoginForm = ({ onClose }: { onClose?: () => void }) => {
               placeholder="contoh@gmail.com"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value.toLowerCase());
+              }}
             />
             {error && (
               <div className="mt-1 text-xs text-destructive">

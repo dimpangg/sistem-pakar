@@ -8,4 +8,5 @@ export const ENDPOINTS = {
   LOGIN: "/login",
   REGISTER: "/register",
   LOGOUT: "/logout",
+  DIAGNOSE_DETAIL: "/diagnose-detail",
 };

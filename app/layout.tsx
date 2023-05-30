@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import clsx from "clsx";
+import { Toaster } from "@/components/organisms/Toaster";
 
 export const metadata = {
   title: "Sistem Pakar Jamur Tiram",
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className="min-h-screen">
         {children}
         {modal}
+        <Toaster />
       </body>
     </html>
   );

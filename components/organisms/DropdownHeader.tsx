@@ -1,6 +1,6 @@
 "use client";
 import { logout } from "@/services";
-import { Gauge, History, LogOut, Menu, User } from "lucide-react";
+import { History, LogOut, Menu, User } from "lucide-react";
 import { Button } from "../molecules";
 import {
   DropdownMenu,
@@ -16,11 +16,11 @@ export function DropdownHeader() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="absolute left-4">
+        <Button variant="ghost" size="sm">
           <Menu size={24} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" alignOffset={10} className="w-56">
+      <DropdownMenuContent align="end" alignOffset={10} className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -28,10 +28,10 @@ export function DropdownHeader() {
             <User className="mr-2 h-4 w-4" />
             <span>Profil</span>
           </DropdownMenuItem>
-          <DropdownMenuItem disabled>
+          {/* <DropdownMenuItem disabled>
             <Gauge className="mr-2 h-4 w-4" />
             <span>Dashboard</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem disabled>
             <History className="mr-2 h-4 w-4" />
             <span>Riwayat Diagnosa</span>

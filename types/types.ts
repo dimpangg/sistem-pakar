@@ -20,12 +20,44 @@ export type ISymptoms = {
 };
 
 export type IDiagnostics = {
-  pest_disease: {
-    label: string;
-    treatment: string[];
-    description: string;
-  };
+  id: string;
+  pest_disease_id: string;
   percentage: number;
+};
+
+export type IDiagnoseDetail = {
+  id: string;
+  pest_disease: IPest_disease;
+  days: string[] | null;
+  history: {
+    symptoms: ISymptoms[];
+    treatment: ITreatmentItem[];
+  };
+  conditions: {
+    id: number;
+    status: string;
+    value: string;
+    treatment: string[];
+    day: number;
+    is_after: number | null;
+  }[];
+  created_at: string;
+  updated_at: string;
+};
+export type IPest_disease = {
+  id: string;
+  label: string;
+  code: string;
+  treatment: string[];
+  description: string;
+};
+export type ITreatmentItem = {
+  day: string;
+  treatment: string[] | null;
+  value: string | null;
+  status: string | null;
+  id: number | null;
+  code: string | null;
 };
 
 export enum LocalStorageKey {

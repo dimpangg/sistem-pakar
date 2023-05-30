@@ -6,6 +6,16 @@
     "editor.formatOnSave": true
   },
   "tailwindCSS.experimental.classRegex": [
-    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["Styles \\=([^;]*);", "'([^']*)'"],
+    ["Styles \\=([^;]*);", "\"([^\"]*)\""],
+    ["Styles \\=([^;]*);", "\\`([^\\`]*)\\`"]
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    ".*className",
+    ".*Cls"
   ]
 }

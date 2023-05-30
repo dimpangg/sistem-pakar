@@ -1,18 +1,12 @@
 "use client";
 
 import { Button, Doctor } from "@/components";
-import {
-  ICommonResponse,
-  IDiagnostics,
-  ISymptoms,
-  LocalStorageKey,
-} from "@/types";
+import { ICommonResponse, IDiagnostics, ISymptoms } from "@/types";
 import React, { useEffect, useState } from "react";
 import { Loader2, Plus, X } from "lucide-react";
 import classNames from "clsx";
-import { setLocalStorage } from "@/utils";
 import { ENDPOINTS } from "@/constant";
-import { API_URL, encryptValue } from "@/helpers";
+import { API_URL } from "@/helpers";
 import { useRouter } from "next/navigation";
 
 const Diagnose = () => {
@@ -25,9 +19,9 @@ const Diagnose = () => {
   const [loadingGet, setLoadingGet] = useState(true);
   const [data, setData] = useState<ISymptoms[]>([]);
 
-  const Title = ({ children }: { children: string }) => (
-    <div className="mb-2 text-large text-slate-900">{children}</div>
-  );
+  // const Title = ({ children }: { children: string }) => (
+  //   <div className="mb-2 text-large text-slate-900">{children}</div>
+  // );
 
   const Checkbox = ({ item }: { item: ISymptoms }) => {
     return (
@@ -46,7 +40,9 @@ const Diagnose = () => {
           }
         }}
       >
-        <div className="text-body-medium text-slate-900">{item.label}</div>
+        <div className="text-body-medium text-slate-900">
+          {item.code} - {item.label}
+        </div>
         <div>
           {selected.includes(item.code) ? (
             <X className="text-slate-500" height={16} width={16} />
@@ -71,25 +67,20 @@ const Diagnose = () => {
     try {
       const res = await fetch(API_URL + ENDPOINTS.DIAGNOSE, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({ symptoms: selected }),
       });
 
       if (!res.ok) {
-        throw new Error("Something went wrong");
+        throw new Error(res.statusText);
       }
 
       const { data }: ICommonResponse<IDiagnostics> = await res.json();
-      setLocalStorage(
-        LocalStorageKey.Diagnosis,
-        encryptValue(JSON.stringify(data))
-      );
-
-      router.replace("/results");
+      router.replace(`/results/${data.id}`);
     } catch (err) {
       setLoading(false);
       throw new Error(JSON.stringify(err));
@@ -113,7 +104,6 @@ const Diagnose = () => {
       }
       if (!res.ok) {
         setLoadingGet(false);
-        router.replace("/login");
         throw new Error("An error occurred while fetching the data.");
       }
       const data: ICommonResponse<ISymptoms[]> = await res.json();
@@ -164,21 +154,21 @@ const Diagnose = () => {
       </section>
       <section className="flex flex-col gap-5">
         <div>
-          <Title>Gejala pada Jamur Tiram</Title>
+          {/* <Title>Gejala pada Jamur Tiram</Title> */}
           <div className="flex flex-col gap-[6px]">
             {data
-              .filter(
-                (item) =>
-                  !item.label.toLowerCase().includes("miselium") &&
-                  !item.label.toLowerCase().includes("baglog") &&
-                  !item.label.toLowerCase().includes("bag log")
-              )
+              // .filter(
+              //   (item) =>
+              //     !item.label.toLowerCase().includes("miselium") &&
+              //     !item.label.toLowerCase().includes("baglog") &&
+              //     !item.label.toLowerCase().includes("bag log")
+              // )
               .map((item) => (
                 <Checkbox key={item.code} item={item} />
               ))}
           </div>
         </div>
-        <div>
+        {/* <div>
           <Title>Gejala pada Baglog</Title>
           <div className="flex flex-col gap-[6px]">
             {data
@@ -201,7 +191,7 @@ const Diagnose = () => {
                 <Checkbox key={item.code} item={item} />
               ))}
           </div>
-        </div>
+        </div> */}
       </section>
       {selected.length > 0 && (
         <div
