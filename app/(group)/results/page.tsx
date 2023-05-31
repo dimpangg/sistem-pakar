@@ -1,81 +1,95 @@
 "use client";
 
-import { decryptValue } from "@/helpers";
-import { IDiagnostics, LocalStorageKey } from "@/types";
-import { getLocalStorage } from "@/utils";
-import React, { useEffect, useState } from "react";
-import { ClipboardCheck, ChevronLeft } from "lucide-react";
-import { Button } from "@/components";
-import Link from "next/link";
-import Loading from "../../loading";
+import { getDiagnoseList } from "@/services";
+import { ICommonResponse, IDiagnoseList } from "@/types";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { id } from "date-fns/locale";
+import { Badge, LoadingPage } from "@/components";
+import { ExternalLink, History } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks";
 
 const ResultsPage = () => {
-  const [data, setData] = useState<IDiagnostics>({
-    pest_disease: {
-      label: "",
-      description: "",
-      treatment: [],
-    },
-    percentage: 0,
-  });
-
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<IDiagnoseList[]>([]);
   useEffect(() => {
-    if (!getLocalStorage(LocalStorageKey.Diagnosis)) {
-      window.location.href = "/";
-    }
-    const data: IDiagnostics = JSON.parse(
-      decryptValue(getLocalStorage(LocalStorageKey.Diagnosis))
-    );
-    setData(data);
+    getDiagnoseList()
+      .then((res: ICommonResponse<IDiagnoseList[]>) => {
+        setData(res.data);
+      })
+      .catch((err: Error) => {
+        setData([]);
+        toast({
+          title: "Error",
+          description: err.message,
+          variant: "destructive",
+          duration: 2000,
+        });
+        throw new Error(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  if (!data.pest_disease.label) return <Loading />;
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
-    <div className="mb-16 mt-5 px-4">
-      <section className="mb-6 flex gap-2">
+    <div className="mb-16 flex flex-col gap-4 px-4">
+      <section className="mb-2 mt-4 flex gap-2">
         <div>
-          <ClipboardCheck size={36} className="text-emerald-400" />
+          <History className="h-9 w-9 text-emerald-400" />
+
+          {/* <ClipboardCheck size={36} className="text-emerald-400" /> */}
         </div>
         <div>
-          <div className="text-h4 text-slate-900">Hasil Diagnosis</div>
+          <div className="text-h4 text-slate-900">Riwayat Diagnosis</div>
           <div className="text-detail text-slate-500">
-            Hasil diagnosis dan cara penanganan pada jamur tiram
+            Daftar riwayat diagnosis yang telah dilakukan
           </div>
         </div>
       </section>
-      <section className="mx-4 mb-10 flex flex-col gap-4">
-        <div className="rounded-2xl bg-slate-50 px-5 py-6">
-          <div className="mb-[6px] text-p-ui font-bold text-slate-900">
-            {data.pest_disease.label}
+      {data.map((item, i) => {
+        return (
+          <div
+            key={item.id}
+            className="flex cursor-pointer items-center gap-4 rounded-md border p-4"
+            onClick={() => {
+              router.push(`/results/${item.id}`);
+            }}
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-900 text-white">
+              <span>{i + 1 < 10 ? "0" + (i + 1) : i + 1}</span>
+            </div>
+            <div className="flex-1 space-y-1">
+              <p className="text-sm font-medium leading-none">
+                {format(new Date(item.created_at), "dd MMM yyyy, HH:mm", {
+                  locale: id,
+                })}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold">Hasil: </span>
+                {item.pest_disease.label}
+              </p>
+              <Badge
+                variant={
+                  item.badge === "Butuh Konfirmasi" ? "warning" : "success"
+                }
+              >
+                {item.badge}
+              </Badge>
+            </div>
+            <ExternalLink className="text-slate-900" size={24} />
+            {/* <div className="h-6 w-[44px] rounded bg-slate-900 text-white">
+              TS
+            </div> */}
           </div>
-          <div className="text-[10px] font-medium leading-4 text-slate-500">
-            {data.pest_disease.description}
-          </div>
-        </div>
-        <div className="rounded-2xl bg-slate-50 px-5 py-6">
-          <div className="mb-[6px] text-p-ui font-bold text-slate-900">
-            Cara Penanganan
-          </div>
-          <ul className="list-inside list-disc">
-            {data.pest_disease.treatment.map((treatment, i) => (
-              <li className="text-detail text-slate-900" key={i}>
-                {treatment}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-      <section className="flex items-center justify-center">
-        <Link href="/diagnose">
-          <Button className="flex items-center justify-center gap-2">
-            <>
-              <ChevronLeft size={16} className="text-white" />
-              Kembali ke Halaman Diagnosis
-            </>
-          </Button>
-        </Link>
-      </section>
+        );
+      })}
     </div>
   );
 };

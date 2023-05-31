@@ -8,12 +8,6 @@ import { ClipboardCheck } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-// type ResultDetailProps = {
-//   params: {
-//     id: string;
-//   };
-// };
-
 const ResultDetail = () => {
   const { id } = useParams();
 

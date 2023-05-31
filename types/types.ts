@@ -27,7 +27,7 @@ export type IDiagnostics = {
 
 export type IDiagnoseDetail = {
   id: string;
-  pest_disease: IPest_disease;
+  pest_disease: IPestDisease;
   days: string[] | null;
   history: {
     symptoms: ISymptoms[];
@@ -44,7 +44,7 @@ export type IDiagnoseDetail = {
   created_at: string;
   updated_at: string;
 };
-export type IPest_disease = {
+export type IPestDisease = {
   id: string;
   label: string;
   code: string;
@@ -58,6 +58,14 @@ export type ITreatmentItem = {
   status: string | null;
   id: number | null;
   code: string | null;
+};
+
+export type IDiagnoseList = {
+  id: string;
+  pest_disease: Omit<IPestDisease, "description">;
+  badge: "Selesai" | "Butuh Konfirmasi";
+  created_at: string;
+  updated_at: Date;
 };
 
 export enum LocalStorageKey {

@@ -9,4 +9,5 @@ export const ENDPOINTS = {
   REGISTER: "/register",
   LOGOUT: "/logout",
   DIAGNOSE_DETAIL: "/diagnose-detail",
+  DIAGNOSE_LIST: "/diagnose-list",
 };

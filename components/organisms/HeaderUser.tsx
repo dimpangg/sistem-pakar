@@ -27,7 +27,7 @@ const HeaderUser = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  const noBackButton = pathname === "/diagnose";
+  const noBackButton = pathname === "/diagnose" || pathname === "/results";
 
   return (
     <header
@@ -42,7 +42,7 @@ const HeaderUser = () => {
             className={clsx(noBackButton && "invisible")}
             disabled={noBackButton}
             variant="ghost"
-            onClick={() => router.replace("/diagnose")}
+            onClick={() => router.back()}
             size="sm"
           >
             <ChevronLeft size={24} />

@@ -8,20 +8,19 @@ import classNames from "clsx";
 import { ENDPOINTS } from "@/constant";
 import { API_URL } from "@/helpers";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks";
 
 const Diagnose = () => {
   const router = useRouter();
 
   const [selected, setSelected] = useState<string[]>([]);
-  const [shake, setShake] = useState(false);
+  // const [shake, setShake] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [loadingGet, setLoadingGet] = useState(true);
   const [data, setData] = useState<ISymptoms[]>([]);
 
-  // const Title = ({ children }: { children: string }) => (
-  //   <div className="mb-2 text-large text-slate-900">{children}</div>
-  // );
+  const { toast } = useToast();
 
   const Checkbox = ({ item }: { item: ISymptoms }) => {
     return (
@@ -55,13 +54,13 @@ const Diagnose = () => {
   };
 
   async function handleSubmit() {
-    if (selected.length === 1 || selected.length > 5) {
-      setShake(true);
-      setTimeout(() => {
-        setShake(false);
-      }, 500);
-      return;
-    }
+    // if (selected.length === 1 || selected.length > 5) {
+    //   setShake(true);
+    //   setTimeout(() => {
+    //     setShake(false);
+    //   }, 500);
+    //   return;
+    // }
 
     setLoading(true);
     try {
@@ -75,15 +74,26 @@ const Diagnose = () => {
         body: JSON.stringify({ symptoms: selected }),
       });
 
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-
       const { data }: ICommonResponse<IDiagnostics> = await res.json();
       router.replace(`/results/${data.id}`);
     } catch (err) {
-      setLoading(false);
-      throw new Error(JSON.stringify(err));
+      if (err instanceof Error) {
+        setLoading(false);
+        toast({
+          title: "Error",
+          description: err.message,
+          variant: "destructive",
+          duration: 2000,
+        });
+      } else {
+        setLoading(false);
+        toast({
+          title: "Error",
+          description: "An error occurred. Please try again later.",
+          variant: "destructive",
+          duration: 2000,
+        });
+      }
     }
   }
 
@@ -97,22 +107,27 @@ const Diagnose = () => {
         credentials: "include",
       });
 
-      if (res.status === 401) {
-        setLoadingGet(false);
-        router.replace("/login");
-        throw new Error("Unauthenticated");
-      }
-      if (!res.ok) {
-        setLoadingGet(false);
-        throw new Error("An error occurred while fetching the data.");
-      }
       const data: ICommonResponse<ISymptoms[]> = await res.json();
       setData(data.data);
       setLoadingGet(false);
     } catch (err) {
-      setLoadingGet(false);
-      window.location.pathname = "/login";
-      throw new Error(JSON.stringify(err));
+      if (err instanceof Error) {
+        setLoadingGet(false);
+        toast({
+          title: "Error",
+          description: err.message + ". Please try again later.",
+          variant: "destructive",
+          duration: 2000,
+        });
+      } else {
+        setLoadingGet(false);
+        toast({
+          title: "Error",
+          description: "An error occurred. Please try again later.",
+          variant: "destructive",
+          duration: 2000,
+        });
+      }
     }
   }
 
@@ -202,24 +217,22 @@ const Diagnose = () => {
         >
           <div className="min-w-[384px] px-4 py-4">
             <div className="flex items-center justify-between">
-              <div
-                className={classNames("mb-3 text-body", shake ? "shake" : "")}
-              >
+              <div className={classNames("mb-3 text-body")}>
                 <span
-                  className={classNames(
-                    selected.length === 1 || selected.length > 5
-                      ? "text-red-500"
-                      : "text-slate-900"
-                  )}
+                // className={classNames(
+                //   selected.length === 1 || selected.length > 5
+                //     ? "text-red-500"
+                //     : "text-slate-900"
+                // )}
                 >
                   {selected.length} gejala dipilih
                 </span>
-                {selected.length === 1 && (
+                {/* {selected.length === 1 && (
                   <span className="text-slate-400"> (min 2 gejala)</span>
                 )}
                 {selected.length > 5 && (
                   <span className="text-slate-400"> (max 5 gejala)</span>
-                )}
+                )} */}
               </div>
               {/* <button className="p-1" onClick={() => setSelected([])}>
                 <Trash2 className="h-4 w-4 text-slate-400" />

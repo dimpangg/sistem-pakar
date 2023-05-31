@@ -1,6 +1,8 @@
 "use client";
 import { logout } from "@/services";
 import { History, LogOut, Menu, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Doctor } from "../atoms";
 import { Button } from "../molecules";
 import {
   DropdownMenu,
@@ -13,6 +15,7 @@ import {
 } from "../molecules/DropdownMenuUI";
 
 export function DropdownHeader() {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,13 +31,21 @@ export function DropdownHeader() {
             <User className="mr-2 h-4 w-4" />
             <span>Profil</span>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem disabled>
-            <Gauge className="mr-2 h-4 w-4" />
-            <span>Dashboard</span>
-          </DropdownMenuItem> */}
-          <DropdownMenuItem disabled>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/diagnose");
+            }}
+          >
+            <Doctor className="mr-2 h-4 w-4 text-slate-900" />
+            <span>Diagnosis</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/results");
+            }}
+          >
             <History className="mr-2 h-4 w-4" />
-            <span>Riwayat Diagnosa</span>
+            <span>Riwayat Diagnosis</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
