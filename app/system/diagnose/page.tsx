@@ -75,7 +75,7 @@ const Diagnose = () => {
       });
 
       const { data }: ICommonResponse<IDiagnostics> = await res.json();
-      router.replace(`/results/${data.id}`);
+      router.replace(`/system/results/${data.id}`);
     } catch (err) {
       if (err instanceof Error) {
         setLoading(false);

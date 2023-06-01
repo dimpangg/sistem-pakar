@@ -8,10 +8,10 @@ import {
   LoginForm,
 } from "@/components";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const Login = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,8 @@ const Login = () => {
       onOpenChange={(open) => {
         setOpen(open);
         if (!open) {
-          router.back();
+          // router.replace("/");
+          window.location.href = "/";
         }
       }}
     >
@@ -42,7 +43,11 @@ const Login = () => {
             Masuk untuk melanjutkan
           </DialogDescription>
         </DialogHeader>
-        <LoginForm onClose={() => setOpen(false)} />
+        <LoginForm
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

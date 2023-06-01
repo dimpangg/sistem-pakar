@@ -243,7 +243,9 @@ export default function Calendar({
               <>
                 <div className="mb-4 rounded-2xl">
                   <div className="mb-[6px] text-p-ui font-bold text-slate-900">
-                    Cara Penanganan
+                    {getNowDay(selectedDay)?.status === "IMPROVED"
+                      ? "Cara Pencegahan Selanjutnya"
+                      : "Cara Penanganan"}
                   </div>
                   {getNowDay(selectedDay)?.status ? (
                     <div className="mb-3 text-base font-bold">
@@ -343,10 +345,6 @@ export default function Calendar({
                   </Alert>
                 )}
                 <RadioBox
-                  // option={data.conditions.map((condition) => ({
-                  //   value: condition.id.toString(),
-                  //   label: condition.value,
-                  // }))}
                   option={optionRadio()}
                   value={value}
                   onChange={(value) => setValue(value)}

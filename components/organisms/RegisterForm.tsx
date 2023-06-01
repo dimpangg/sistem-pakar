@@ -62,7 +62,7 @@ const RegisterForm = ({
             name: data.name,
           })
             .then(() => {
-              router.push("/diagnose");
+              router.push("/system/diagnose");
             })
             .catch((err) => {
               setLoading(false);

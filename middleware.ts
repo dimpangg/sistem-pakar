@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const publicPaths = ["/login", "/", "/register"];
 
   if (cookiesJwt && publicPaths.includes(path)) {
-    return NextResponse.redirect(new URL("/diagnose", request.url));
+    return NextResponse.redirect(new URL("/system/diagnose", request.url));
   } else if (!cookiesJwt && !publicPaths.includes(path)) {
     return NextResponse.redirect(new URL("/login", request.url));
   } else {

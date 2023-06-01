@@ -68,6 +68,24 @@ export type IDiagnoseList = {
   updated_at: Date;
 };
 
+export type IProfile = {
+  id: string;
+  name: string;
+  username: null | string;
+  email: string;
+  phone: null | string;
+  birthdate: null | Date;
+  sex: null | string;
+  avatar: string;
+  status: boolean;
+  level: null;
+  email_verified_at: null;
+  phone_verified_at: null;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: null;
+};
+
 export enum LocalStorageKey {
   Diagnosis = "38f00f8738e241daea6f37f6f55ae8414d7b0219",
   Token = "38f00f8738e241daea6f37f6fakmh8414d7b0219",

@@ -27,7 +27,7 @@ const HeaderUser = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  const noBackButton = pathname === "/diagnose" || pathname === "/results";
+  const noBackButton = pathname === "/system/diagnose";
 
   return (
     <header
@@ -49,7 +49,7 @@ const HeaderUser = () => {
           </Button>
         )}
         <Link
-          href="/diagnose"
+          href="/system/diagnose"
           className={clsx("text-h4", noBackButton && "pl-4")}
         >
           Sistem Pakar

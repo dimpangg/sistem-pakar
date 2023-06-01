@@ -40,7 +40,7 @@ const LoginForm = ({ onClose }: { onClose?: () => void }) => {
     setError(null);
     try {
       await login(email, password);
-      router.push("/diagnose");
+      router.push("/system/diagnose");
       onClose?.();
     } catch (err) {
       const data = (await (err as Response).json()) as ICommonResponse<null>;
@@ -115,6 +115,25 @@ const LoginForm = ({ onClose }: { onClose?: () => void }) => {
       <Button isLoading={loading} fullWidth type="submit">
         {!isEmailFound ? "Selanjutnya" : "Masuk"}
       </Button>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t"></span>
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">ATAU</span>
+        </div>
+      </div>
+
+      <p className="px-8 text-center text-sm text-muted-foreground">
+        <Link
+          className="hover:text-brand underline underline-offset-4"
+          href="/register"
+          {...(onClose && { onClick: onClose })}
+        >
+          Belum punya akun? Daftar
+        </Link>
+      </p>
     </form>
   );
 };

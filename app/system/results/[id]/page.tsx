@@ -3,19 +3,22 @@ import { LoadingPage } from "@/components";
 import Calendar from "@/components/organisms/Calendar";
 import { ENDPOINTS } from "@/constant";
 import { API_URL } from "@/helpers";
+import { toast } from "@/hooks";
 import { IDiagnoseDetail } from "@/types";
 import { ClipboardCheck } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const ResultDetail = () => {
   const { id } = useParams();
+  const router = useRouter();
 
   const [data, setData] = useState<IDiagnoseDetail>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getDetailDiagnose(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   async function getDetailDiagnose(id: string) {
@@ -29,8 +32,20 @@ const ResultDetail = () => {
     });
 
     if (!res.ok) {
-      setLoading(false);
-      throw new Error(res.statusText);
+      switch (res.status) {
+        case 404:
+          toast({
+            title: "Error",
+            description: "Data tidak ditemukan",
+            variant: "destructive",
+            duration: 2000,
+          });
+          router.push("/system/results");
+          break;
+        default:
+          setLoading(false);
+          throw new Error(res.statusText);
+      }
     }
 
     const data = await res.json();

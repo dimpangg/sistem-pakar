@@ -27,13 +27,17 @@ export function DropdownHeader() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem disabled>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/system/profile");
+            }}
+          >
             <User className="mr-2 h-4 w-4" />
             <span>Profil</span>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              router.push("/diagnose");
+              router.push("/system/diagnose");
             }}
           >
             <Doctor className="mr-2 h-4 w-4 text-slate-900" />
@@ -41,7 +45,7 @@ export function DropdownHeader() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              router.push("/results");
+              router.push("/system/results");
             }}
           >
             <History className="mr-2 h-4 w-4" />
