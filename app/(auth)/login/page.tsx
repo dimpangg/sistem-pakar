@@ -6,7 +6,7 @@ import React from "react";
 
 const Login = () => {
   return (
-    <div className="w-full">
+    <div className="w-full px-4">
       <Link
         href="/"
         className={cn(

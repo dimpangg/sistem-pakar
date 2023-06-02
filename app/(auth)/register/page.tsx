@@ -10,7 +10,7 @@ const Register = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   return (
-    <section className="w-full">
+    <section className="w-full px-4">
       <a
         href="/"
         className={cn(
