@@ -43,7 +43,16 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, isLoading, fullWidth, children, ...props },
+    {
+      className,
+      variant,
+      size,
+      isLoading,
+      fullWidth,
+      children,
+      disabled,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -52,7 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           "gap-2": isLoading,
         })}
         ref={ref}
-        disabled={isLoading || props.disabled}
+        disabled={isLoading || disabled}
         {...props}
       >
         {isLoading ? (

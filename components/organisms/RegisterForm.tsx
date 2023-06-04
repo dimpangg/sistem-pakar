@@ -20,7 +20,10 @@ const RegisterForm = ({
 
   const registerSchema = z
     .object({
-      email: z.string().email("Email tidak valid"),
+      email: z
+        .string()
+        .nonempty("Email tidak boleh kosong")
+        .email("Email tidak valid"),
       password: z.string().min(8, "Password minimal 8 karakter"),
       confirmPassword: z
         .string()

@@ -44,6 +44,7 @@ export default function Calendar({
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   const { toast } = useToast();
 
@@ -88,13 +89,30 @@ export default function Calendar({
     );
   }
 
-  function getMoreDay(date: Date) {
-    return data?.history.treatment.find(
-      (item) =>
-        item.treatment === null &&
-        format(date, "yyyy-MM-dd") >= format(parseISO(item.day), "yyyy-MM-dd")
+  function isNullTreatmentLessThanToday(selectedDay: Date) {
+    // and selectedDay is today
+    return (
+      data?.history.treatment.find(
+        (item) =>
+          item.treatment === null &&
+          format(parseISO(item.day), "yyyy-MM-dd") < format(today, "yyyy-MM-dd")
+      ) !== undefined && isSameDay(selectedDay, today)
     );
   }
+
+  function getLastDayTreatment() {
+    return parseToDate(
+      data?.history.treatment[data?.history.treatment.length - 1]?.day || ""
+    );
+  }
+
+  // function getMoreDay(date: Date) {
+  //   return data?.history.treatment.find(
+  //     (item) =>
+  //       item.treatment === null &&
+  //       format(date, "yyyy-MM-dd") >= format(parseISO(item.day), "yyyy-MM-dd")
+  //   );
+  // }
 
   function parseToDate(date: string) {
     return parse(
@@ -329,7 +347,8 @@ export default function Calendar({
                   <></>
                 )}
               </>
-            ) : getMoreDay(selectedDay) ? (
+            ) : getNowDay(selectedDay)?.treatment === null ||
+              isNullTreatmentLessThanToday(selectedDay) ? (
               <div className="text-slate-900">
                 <div className="mb-3 text-base font-bold">
                   Bagaimana kondisi jamur tiram sekarang?
@@ -350,8 +369,10 @@ export default function Calendar({
                   onChange={(value) => setValue(value)}
                 />
                 <Button
+                  isLoading={loadingSubmit}
                   onClick={(e) => {
                     e.preventDefault();
+                    setLoadingSubmit(true);
                     fetch(API_URL + "/diagnose-add-day", {
                       method: "POST",
                       body: JSON.stringify({
@@ -367,6 +388,9 @@ export default function Calendar({
                       .then((res) => {
                         if (res.ok) {
                           refetch?.();
+                          if (isNullTreatmentLessThanToday(selectedDay)) {
+                            setSelectedDay(getLastDayTreatment());
+                          }
                           toast({
                             description: "Berhasil menyimpan data",
                             duration: 1500,
@@ -377,6 +401,7 @@ export default function Calendar({
                       })
                       .finally(() => {
                         setValue(null);
+                        setLoadingSubmit(false);
                       });
                   }}
                   disabled={!(value && isSameDay(selectedDay, today))}
